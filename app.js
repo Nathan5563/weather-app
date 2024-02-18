@@ -1,4 +1,5 @@
 const form = document.querySelector(".form");
+const overallCont = document.querySelector(".overall-container");
 
 async function getCity(city) {
     let latitude, longitude;
@@ -19,7 +20,26 @@ async function getWeather(city) {
     axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${cityLatitude}&longitude=${cityLongitude}&hourly=temperature_2m,precipitation_probability&timezone=auto&forecast_days=1`)
     .then(res => {
         try {
-            console.log(res.data);
+            for (let i = 0; i < res.data.hourly.temperature_2m.length; i++) {
+                let hour = document.createElement("div");
+                if (i < 10) {
+                    hour.innerHTML = "0" + i + "00";
+                } else {
+                    hour.innerHTML = i + "00";
+                }
+                hour.classList.add("hour");
+
+                let temp = document.createElement("div");
+                temp.innerHTML = res.data.hourly.temperature_2m[i]
+                temp.classList.add("temp");
+
+                let hourtemp = document.createElement("div");
+                hourtemp.append(hour, temp)
+                hourtemp.classList.add("hourCont");
+
+                overallCont.append(hourtemp);
+                overallCont.style["overflow-x"] = "scroll";
+            }
         } catch (e) {
             console.log("Error!", e);
         }
@@ -28,7 +48,9 @@ async function getWeather(city) {
 
 form.addEventListener("submit", async e => {
     e.preventDefault();
-
+    while (overallCont.firstChild) {
+        overallCont.removeChild(overallCont.lastChild);
+    }
     const city = form.elements.query.value;
     getWeather(city);  
 })
