@@ -7,16 +7,30 @@
     <title>Weather Forecast</title>
 </head>
 <body>
-    <form class="form" autocomplete="off">
-        <input name="query" type="text" />
-        <button type="submit">Submit</button>
-    </form>
+    <div class="form-container">
+        <form class="search-form" autocomplete="off">
+            <div class="search-container">
+                <input name="query" class="query" type="search" placeholder="E.g., London, Tokyo, Cairo" />
+                <button type="submit" class="search-inline-btn">
+                    <i class="fa-solid fa-magnifying-glass text-white"></i>
+                </button>
+            </div>
+            <div class="separate">
+                <hr class="hr-text" data-content="or">
+            </div>
+        </form>
+        <form class="location-form">
+            <div class="current-location">
+                <button type="submit" class="location-btn">Use Current Location</button>
+            </div>
+        </form>
+    </div>
 
-    <div class="overall-container">
-
+    <div class="container">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/9a48d13ec3.js" crossorigin="anonymous"></script>
     <script src="app.js"></script>
 </body>
 </html>

@@ -1,8 +1,12 @@
-const form = document.querySelector(".form");
-const overallCont = document.querySelector(".overall-container");
+const searchForm = document.querySelector(".search-form");
+const locationForm = document.querySelector(".location-form")
+const cont = document.querySelector(".container");
+const today = document.querySelector(".today");
+const useLocation = document.querySelector(".location-btn")
 
 async function getCity(city) {
     let latitude, longitude;
+
     const res = await axios.get(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`);
     try {
         latitude = res.data.results[0].latitude;
@@ -10,47 +14,79 @@ async function getCity(city) {
     } catch (e) {
         console.log("Error", e);
     }
+
+    return [latitude, longitude];
+}
+
+function apiFunctionWrapper() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(successResponse => {
+            resolve(successResponse);
+        }, (errorResponse) => {
+            reject(errorResponse);
+        });
+    });
+}
+
+async function getCoords() {
+    let latitude, longitude;
+    try {
+        const result = await apiFunctionWrapper();
+        latitude = result.coords.latitude;
+        longitude = result.coords.longitude;
+
+    } catch (e) {
+        console.log("Error", e);
+    }
+
     return [latitude, longitude];
 }
 
 async function getWeather(city) {
-    cityLatitude = await getCity(city).then(res => res[0]);
-    cityLongitude = await getCity(city).then(res => res[1]);
+    if (city) {
+        cityLatitude = await getCity(city).then(res => res[0]);
+        cityLongitude = await getCity(city).then(res => res[1]);
+    } else {
+        cityLatitude = await getCoords().then(res => res[0]);
+        cityLongitude = await getCoords().then(res => res[1]);
+    }
 
-    axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${cityLatitude}&longitude=${cityLongitude}&hourly=temperature_2m,precipitation_probability&timezone=auto&forecast_days=1`)
+    axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${cityLatitude}&longitude=${cityLongitude}&current=temperature_2m,relative_humidity_2m,is_day&timezone=auto&forecast_days=1`)
     .then(res => {
         try {
-            for (let i = 0; i < res.data.hourly.temperature_2m.length; i++) {
-                let hour = document.createElement("div");
-                if (i < 10) {
-                    hour.innerHTML = "0" + i + "00";
-                } else {
-                    hour.innerHTML = i + "00";
-                }
-                hour.classList.add("hour");
+            console.log(res.data);
+            let hour = document.createElement("div");
+            const timeString12hr = new Date(res.data.current.time)
+                .toLocaleTimeString('en-US',
+                    { hour12: true, hour: 'numeric', minute: 'numeric' }
+                );
+            hour.innerHTML = timeString12hr;
 
-                let temp = document.createElement("div");
-                temp.innerHTML = res.data.hourly.temperature_2m[i]
-                temp.classList.add("temp");
+            let temp = document.createElement("div");
+            temp.innerHTML = res.data.current.temperature_2m;
 
-                let hourtemp = document.createElement("div");
-                hourtemp.append(hour, temp)
-                hourtemp.classList.add("hourCont");
-
-                overallCont.append(hourtemp);
-                overallCont.style["overflow-x"] = "scroll";
-            }
+            let today = document.createElement("div");
+            today.append(hour, temp);
+            cont.append(today);
         } catch (e) {
             console.log("Error!", e);
         }
     })
 }
 
-form.addEventListener("submit", async e => {
+searchForm.addEventListener("submit", async e => {
     e.preventDefault();
-    while (overallCont.firstChild) {
-        overallCont.removeChild(overallCont.lastChild);
+    while (cont.firstChild) {
+        cont.removeChild(cont.lastChild);
     }
-    const city = form.elements.query.value;
+    const city = searchForm.elements.query.value;
     getWeather(city);  
+})
+
+locationForm.addEventListener("submit", e => {
+    e.preventDefault();
+    while (cont.firstChild) {
+        cont.removeChild(cont.lastChild);
+    }
+    getWeather();
 })
