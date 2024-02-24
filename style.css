@@ -1,4 +1,10 @@
+@font-face {
+    font-family: "Titillium Web";
+    src: url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+}
+
 body {
+    font-family: "Titillium Web", sans-serif;
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -6,12 +12,18 @@ body {
     display: flex;
 }
 
+h1, h2 {
+    margin: 0;
+    font-weight: normal;
+}
+
 .form-container {
     flex: 3;
     display: flex;
     flex-direction: column;
-    background: pink;
+    background: white;
     padding: 2rem;
+    border-right: 1px solid gray;
 }
 
 .search-form, .location-form {
@@ -24,6 +36,7 @@ body {
     align-self: flex-start;
     display: flex;
     border: 2px solid gray;
+    margin-top: 1rem;
 }
 
 .query {
@@ -48,7 +61,7 @@ body {
 
 .search-inline-btn:hover {
     cursor: pointer;
-    background-color: aquamarine;
+    background-color: white;
 }
 
 .hr-text {
@@ -77,7 +90,7 @@ body {
     padding: 0 .5em;
     line-height: 1.5em;
     color: #818078;
-    background-color: pink;
+    background-color: white;
   }
 }
 
@@ -92,10 +105,34 @@ body {
 
 .location-btn:hover {
     cursor: pointer;
-    background: aquamarine;
+    background: white;
 }
 
-.container {
+.content-container {
     flex: 7;
-    background: aquamarine;
+    background: white;
+    padding: 2rem;
+}
+
+.content-container h1 span {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.loader {
+    display: none;
+    width: 50px;
+    height: 50px;
+    border-top: 5px solid black;
+    border-right: 5px solid lightgray;
+    border-left: 5px solid lightgray;
+    border-bottom: 5px solid lightgray;
+    border-radius: 100px;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
 }

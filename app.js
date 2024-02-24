@@ -3,6 +3,8 @@ const locationForm = document.querySelector(".location-form")
 const cont = document.querySelector(".container");
 const today = document.querySelector(".today");
 const useLocation = document.querySelector(".location-btn")
+const loader = document.querySelector(".loader");
+const contentCont = document.querySelector(".content-container");
 
 async function getCity(city) {
     let latitude, longitude;
@@ -76,17 +78,34 @@ async function getWeather(city) {
 
 searchForm.addEventListener("submit", async e => {
     e.preventDefault();
+    contentCont.children[0].children[0].style.opacity = 0;
+
     while (cont.firstChild) {
         cont.removeChild(cont.lastChild);
     }
+    
     const city = searchForm.elements.query.value;
-    getWeather(city);  
+    
+    loader.style.display = "block";
+    await getWeather(city);  
+    loader.style.display = "none";
+
+    contentCont.children[0].children[0].innerHTML = city;
+    contentCont.children[0].children[0].style.opacity = 1;
 })
 
-locationForm.addEventListener("submit", e => {
+locationForm.addEventListener("submit", async e => {
     e.preventDefault();
+    contentCont.children[0].children[0].style.opacity = 0;
+    
     while (cont.firstChild) {
         cont.removeChild(cont.lastChild);
     }
-    getWeather();
+
+    loader.style.display = "block";
+    await getWeather();
+    loader.style.display = "none";
+
+    contentCont.children[0].children[0].innerHTML = 'Your Location';
+    contentCont.children[0].children[0].style.opacity = 1;
 })
