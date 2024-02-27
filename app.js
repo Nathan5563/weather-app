@@ -62,13 +62,14 @@ async function getWeather(city) {
                 .toLocaleTimeString('en-US',
                     { hour12: true, hour: 'numeric', minute: 'numeric' }
                 );
-            hour.innerHTML = timeString12hr;
+            hour.innerHTML = `Time: ${timeString12hr} ${res.data.timezone_abbreviation}`;
 
             let temp = document.createElement("div");
-            temp.innerHTML = res.data.current.temperature_2m;
+            temp.innerHTML = `Temperature: ${res.data.current.temperature_2m}${res.data.current_units.temperature_2m}`;
 
             let today = document.createElement("div");
             today.append(hour, temp);
+            today.classList.add("today")
             cont.append(today);
         } catch (e) {
             console.log("Error!", e);

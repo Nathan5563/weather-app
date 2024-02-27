@@ -136,3 +136,12 @@ h1, h2 {
         transform: rotate(360deg);
     }
 }
+
+.container {
+    margin: 1rem 1rem 1rem 0;
+    padding: 1.5rem 2rem 2rem 2rem;
+}
+
+.today {
+    font-size: 2rem;
+}
