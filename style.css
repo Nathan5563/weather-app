@@ -6,7 +6,7 @@
 body {
     font-family: "Titillium Web", sans-serif;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     margin: 0;
     padding: 0;
     display: flex;
@@ -154,6 +154,7 @@ h1, h2 {
 @media screen and (max-width: 900px) {
     body {
         flex-direction: column;
+        height: 100dvh;
     }
 
     .form-container {
@@ -199,6 +200,7 @@ h1, h2 {
     body {
         flex-direction: column-reverse;
         overflow-x: hidden;
+        height: 100dvh;
     }
 
     .form-container {
