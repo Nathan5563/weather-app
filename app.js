@@ -24,9 +24,9 @@ function getFormattedTime(time) {
     return `Time: ${timeString12hr}`;
 }
 
-function getToday(res) {
+function getToday(res, day, month, year) {
     let hour = document.createElement("div");
-    hour.innerHTML = `${getFormattedTime(res.data.current.time)} ${res.data.timezone_abbreviation}`;
+    hour.innerHTML = `${getFormattedTime(res.data.current.time)} ${res.data.timezone_abbreviation} | ${day}/${month}/${year}`;
 
     let temp = document.createElement("div");
     temp.innerHTML = `Temperature: ${res.data.current.temperature_2m}${res.data.current_units.temperature_2m}`;
@@ -38,10 +38,11 @@ function getToday(res) {
     cont.append(today);
 }
 
-function getForecast(res) {
+function getForecast(res, day, month, year) {
+
     for (let i = 1; i < res.data.daily.temperature_2m_max.length; i++) {
         let forecast = document.createElement("div");
-        forecast.innerHTML = `Max: ${res.data.daily.temperature_2m_max[i]}, Min: ${res.data.daily.temperature_2m_min[i]}`;
+        forecast.innerHTML = `Max: ${res.data.daily.temperature_2m_max[i]}, Min: ${res.data.daily.temperature_2m_min[i]} | ${day+i}/${month}/${year}`;
         forecast.classList.add("forecast")
         cont.append(forecast);
     }
@@ -88,10 +89,12 @@ async function getWeather(city) {
     .then(res => {
         try {
             console.log(res.data);
-
-            getToday(res);
-
-            getForecast(res);
+            date = new Date();
+            day = date.getDate();
+            month = date.getMonth()+1;
+            year = date.getFullYear();
+            getToday(res, day, month, year);
+            getForecast(res, day, month, year);
             
         } catch (e) {
             console.log("Error!", e);
