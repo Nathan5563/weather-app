@@ -39,13 +39,15 @@ function getToday(res, day, month, year) {
 }
 
 function getForecast(res, day, month, year) {
-
+    let forecastCont = document.createElement("div");
     for (let i = 1; i < res.data.daily.temperature_2m_max.length; i++) {
         let forecast = document.createElement("div");
         forecast.innerHTML = `Max: ${res.data.daily.temperature_2m_max[i]}, Min: ${res.data.daily.temperature_2m_min[i]} | ${day+i}/${month}/${year}`;
         forecast.classList.add("forecast")
-        cont.append(forecast);
+        forecastCont.append(forecast);
+        forecastCont.classList.add("forecast-container");
     }
+    cont.append(forecastCont);
 }
 
 async function getCity(city) {
