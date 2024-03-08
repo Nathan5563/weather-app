@@ -24,15 +24,31 @@ function getFormattedTime(time) {
     return `Time: ${timeString12hr}`;
 }
 
-function getToday(res, day, month, year) {
-    let hour = document.createElement("div");
-    hour.innerHTML = `${getFormattedTime(res.data.current.time)} ${res.data.timezone_abbreviation} | ${day}/${month}/${year}`;
+function getToday(res) {
+    let is_day_icon = document.createElement("i");
+    is_day_icon.classList.add("is-day-icon");
+
+    if (res.data.current.is_day) {
+        is_day_icon.classList.add("fas", "fa-sun");
+    } else {
+        is_day_icon.classList.add("fas", "fa-moon");
+    }
 
     let temp = document.createElement("div");
     temp.innerHTML = `Temperature: ${res.data.current.temperature_2m}${res.data.current_units.temperature_2m}`;
 
+    let wind_speed = document.createElement("div");
+    wind_speed.innerHTML = `Wind Speed: ${res.data.current.wind_speed_10m}${res.data.current_units.wind_speed_10m}`;
+
+    let humidity = document.createElement("div");
+    humidity.innerHTML = `Humidity: ${res.data.current.relative_humidity_2m}${res.data.current_units.relative_humidity_2m}`;
+
+    let today_stats = document.createElement("div");
+    today_stats.append(temp, wind_speed, humidity);
+    today_stats.classList.add("today-stats");
+
     let today = document.createElement("div");
-    today.append(hour, temp);
+    today.append(is_day_icon, today_stats);
     today.classList.add("today");
 
     cont.append(today);
@@ -87,16 +103,13 @@ async function getWeather(city) {
         cityLongitude = await getCoords().then(res => res[1]);
     }
 
-    axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${cityLatitude}&longitude=${cityLongitude}&current=temperature_2m,relative_humidity_2m,is_day,precipitation&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=7`)
+    axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${cityLatitude}&longitude=${cityLongitude}&current=temperature_2m,relative_humidity_2m,is_day,precipitation,rain,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=7`)
     .then(res => {
         try {
             console.log(res.data);
             date = new Date();
-            day = date.getDate();
-            month = date.getMonth()+1;
-            year = date.getFullYear();
-            getToday(res, day, month, year);
-            getForecast(res, day, month, year);
+            getToday(res);
+            getForecast(res, date.getDate(), date.getMonth()+1, date.getFullYear());
             
         } catch (e) {
             console.log("Error!", e);
