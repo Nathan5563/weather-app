@@ -164,17 +164,29 @@ h1, h2 {
 }
 
 .forecast-container {
+    display: flex;
     background-color: #83a5b5;
     border-radius: 5px;
-    padding: 2rem 2rem 0 2rem;
     margin: 2rem 0;
 }
 
 .forecast {
-    padding-bottom: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    border-right: 1px solid gray;
 }
 
-@media screen and (max-width: 900px) {
+.forecast:last-of-type {
+    border-right: none;
+}
+
+@media screen and (max-width: 1200px) {
     body {
         flex-direction: column;
         height: 100dvh;
