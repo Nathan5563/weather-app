@@ -145,7 +145,7 @@ h1, h2 {
 .today {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
     background-color: #83a5b5;
     border: 1px solid gray;
     border-radius: 5px;
@@ -168,6 +168,7 @@ h1, h2 {
     background-color: #83a5b5;
     border-radius: 5px;
     margin: 2rem 0;
+    overflow: auto;
 }
 
 .forecast {
@@ -176,10 +177,10 @@ h1, h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 7.5px;
     padding: 1.5rem;
-    font-size: 1.2rem;
-    border-right: 1px solid gray;
+    font-size: 1rem;
+    border-right: 1px solid white;
 }
 
 .forecast:last-of-type {
@@ -262,22 +263,17 @@ h1, h2 {
     }
 
     .today {
-        font-size: 1rem;
         padding: 1rem;
-        gap: 1rem;
-    }
-
-    .forecast-container {
-        font-size: 0.9rem;
-        margin: 1.5rem 0;
-        padding: 1rem 1rem 0rem 1rem;
-    }
-
-    .forecast {
-        padding-bottom: 1rem;
+        font-size: 1rem;
     }
 
     .today-stats {
         gap: 0.5rem;
+    }
+
+    .forecast {
+        gap: 5px;
+        padding: 1rem;
+        font-size: 0.85rem;
     }
 }
