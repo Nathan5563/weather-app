@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Weather Forecast</title>
-</head>
-<body>
-    <script src="https://kit.fontawesome.com/9a48d13ec3.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-
+  </head>
+  <body>
     <div class="form-container">
-        <h2>See Weather Forecasts:</h2>
-        <form class="search-form" autocomplete="off">
-            <div class="search-container">
-                <input name="query" class="query" type="search" placeholder="E.g., Paris, Tokyo, Cairo" />
-                <button type="submit" class="search-inline-btn">
-                    <i class="fa-solid fa-magnifying-glass text-white"></i>
-                </button>
-            </div>
-            <div class="separate">
-                <hr class="hr-text" data-content="or">
-            </div>
-        </form>
+      <h2>See Weather Forecasts:</h2>
+      <form class="search-form" autocomplete="off">
+        <div class="search-container">
+          <input
+            name="query"
+            class="query"
+            type="search"
+            placeholder="E.g., Paris, Tokyo, Cairo"
+          />
+          <button type="submit" class="search-inline-btn">
+            <i class="fa-solid fa-magnifying-glass text-white"></i>
+          </button>
+        </div>
+        <div class="separate">
+          <hr class="hr-text" data-content="or" />
+        </div>
+      </form>
 
-        <form class="location-form">
-            <div class="current-location">
-                <button type="submit" class="location-btn">Use Current Location</button>
-            </div>
-        </form>
-
+      <form class="location-form">
+        <div class="current-location">
+          <button type="submit" class="location-btn">
+            Use Current Location
+          </button>
+        </div>
+      </form>
     </div>
 
     <div class="content-container">
-
-        <h1>Today's Weather in <span></span></h1>
-        <hr>
-        <div class="loader"></div>
-        <div class="container"></div>
-        
+      <h1>Today's Weather in <span></span></h1>
+      <hr />
+      <div class="loader"></div>
+      <div class="container"></div>
     </div>
+
+    <script
+      src="https://kit.fontawesome.com/9a48d13ec3.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
