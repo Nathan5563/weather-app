@@ -65,8 +65,8 @@ function getForecast(data) {
     date.innerHTML = todayDate.plus({ days: i }).toFormat("LLL dd',' yyyy");
     date.classList.add("forecast-date");
 
-    forecastMax.innerHTML = `Max: ${data.daily.temperature_2m_max[i]}`;
-    forecastMin.innerHTML = `Min: ${data.daily.temperature_2m_min[i]}`;
+    forecastMax.innerHTML = `Max: ${data.daily.temperature_2m_max[i]}${data.daily_units.temperature_2m_max}`;
+    forecastMin.innerHTML = `Min: ${data.daily.temperature_2m_min[i]}${data.daily_units.temperature_2m_min}`;
 
     forecast.append(date, forecastMax, forecastMin);
     forecast.classList.add("forecast");
